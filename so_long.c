@@ -5,71 +5,91 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: psuanpro <Marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/08 20:28:18 by psuanpro          #+#    #+#             */
-/*   Updated: 2022/08/16 22:23:55 by psuanpro         ###   ########.fr       */
+/*   Created: 2022/08/26 18:31:19 by psuanpro          #+#    #+#             */
+/*   Updated: 2022/08/28 03:20:13 by psuanpro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-typedef struct	s_vector
+void	*ft_chk_map(char **line)
 {
-	int	x;
-	int	y;
-}				t_vector;
-
-typedef struct	s_program
-{
-	void	*mlx;
-	void	*window;
-	void	*img;
-	t_vector	size;
+	int	i;
+	int j;
 	
-}				t_program;
-
-typedef struct	s_image
-{
-	t_vector	size;
-}	t_image;
-
-int	key_hook(int key, t_program *program)
-{
-	if (key)
-		printf("hello keyboard %d\n", key);
-	return (0);
-}
-
-int	mouse_hook(int key, t_program *program)
-{
-	if (key)
-		printf("hello mouse %d\n", key);
-	return (0);
-}
-
-int	main(void)
-{
-	t_program	program;
-	int	width;
-	int	height;
-
-	program.mlx = mlx_init();
-	program.window = mlx_new_window(program.mlx, 1981, 1081, "hello!!!!");
-	mlx_key_hook(program.window, key_hook, &program);//keyboard
-	mlx_mouse_hook(program.window, mouse_hook, &program);//mouse
-	
-	program.img = mlx_xpm_file_to_image(program.mlx, "./474dfc565947440db50294afb746667d9bnyCRIgMe4EPIsB-10.xpm", &width, &height);
-	int x = 0;
-	int y = 0;
-	
-	while (y <= 1080)
+	i = -1;
+	j = -1;
+	while(line[++i] != NULL)
 	{
-		x = 0;
-		while (x <= 1980)
+		while (line[i][++j] != '\0')
 		{
-			mlx_put_image_to_window(program.mlx , program.window, program.img, x, y);
-			x += 64;
+			if(line[i][j] != '0' || line[i][j] != '1' \
+				|| line[i][j] != 'C' || line[i][j] != 'E'\
+				|| line[i][j] != 'P' ||line[i][j] != '\n')
+			{
+				write(1, "map is wrong!!!", 15);
+				// ft_free_map(&p);
+			}
 		}
-		y += 64;
 	}
-	mlx_loop(program.mlx);
+}
+
+int	ft_len_line_sl(t_pro *p, char *path)
+{
+	char *line;
+	int	len_line;
+
+	p->map.fd = open(path, O_RDONLY);
+	line = get_next_line(p->map.fd);
+	len_line = 0;
+	while (line != NULL)
+	{
+		free(line);
+		line = get_next_line(p->map.fd);
+		len_line++;
+	}
+	free(line);
+	close(p->map.fd);
+	return (len_line);
+}
+
+void	ft_get_map(t_pro *p, char *path)
+{
+	int	j;
+	int	i;
+
+	i = -1;
+	j = ft_len_line_sl(p, path);
+	p->map.fd = open(path, O_RDONLY);
+	p->map.m_ar = (char **)malloc(sizeof(char *) * (j + 1));
+	while (++i < j)
+		p->map.m_ar[i] = get_next_line(p->map.fd);
+	p->map.m_ar[i + 1] = NULL;
+	close(p->map.fd);
+	// ft_chk_map(p->map.m_ar);
+}
+// void	ft_create_map(t_pro	*p)
+// {
+// 	p->map.size.x = 1000;//48*ft_strlenline;
+// 	p->map.size.y = 1000;//48*len_line;
+// 	p->window = mlx_new_window(p->mlx, p->map.size.x, p->map.size.y, "so_long");
+// }
+
+int	main(int ac, char **av)
+{
+	(void)ac;
+	t_pro	p;
+
+	// p.mlx = mlx_init();
+	
+	ft_get_map(&p, av[1]);
+	// ft_create_map(&p);
+	int i = 0;
+	while(p.map.m_ar[i] != NULL){
+		printf("m_ar[%d] = %s\n",i, p.map.m_ar[i]);
+		i++;
+	}
+	
+	// ft_free_so_long();
+	// mlx_loop(p.mlx);
 }
