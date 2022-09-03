@@ -6,7 +6,7 @@
 /*   By: psuanpro <Marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 17:58:56 by psuanpro          #+#    #+#             */
-/*   Updated: 2022/08/28 01:18:34 by psuanpro         ###   ########.fr       */
+/*   Updated: 2022/09/04 02:58:48 by psuanpro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,26 +29,31 @@ typedef struct s_vec
 {
 	int	x;
 	int	y;
-}	t_vec;
+}				t_vec;
 
-typedef	struct s_map
+typedef struct s_map
 {
 	t_vec	size;
-	char	**m_ar;
+	char	**ar;
+	char	**buf;
+	int	lenl;
 	int	fd;
-	int lenl;
-}	s_map;
+}				t_map;
 
 typedef struct s_pro
 {
 	void	*mlx;
-	t_vec	*window;
-	s_map	map;
-	t_vec	sprite;
-}	t_pro;
+	t_vec	*win;
+	t_map	map;
+}				t_pro;
 
-void	ft_create_map(t_pro	*p);
-int	ft_len_line_sl(t_pro *p, char *path);
-void	ft_get_map(t_pro *p,char *path);
+int		count_line_map(t_pro *p, char *path);
+void	get_map(t_pro *p,char *path);
+void	get_map_ar(t_pro *p, char *path);
+int		map_chk_size(t_pro *p);
+int		map_chk_path(t_pro *p);
+void	create_map_buff(t_pro *p);
+int		map_chk_wall(t_pro *p);
+int		flood_fill(t_pro *p);
 
-#endif
+# endif

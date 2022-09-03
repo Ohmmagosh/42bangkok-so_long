@@ -1,22 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.c                                          :+:      :+:    :+:   */
+/*   checker2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psuanpro <Marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/26 18:31:19 by psuanpro          #+#    #+#             */
-/*   Updated: 2022/09/03 02:44:46 by psuanpro         ###   ########.fr       */
+/*   Created: 2022/09/04 02:26:55 by psuanpro          #+#    #+#             */
+/*   Updated: 2022/09/04 02:57:33 by psuanpro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	main(int ar, char **av)
+int	flood_fill(t_pro *p)
 {
-	t_pro	p;
-	(void)ar;
 
-	get_map(&p, av[1]);
+	return (0);
+}
+
+int	map_chk_wall(t_pro *p)
+{
 	return (0);
 }
