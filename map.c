@@ -5,76 +5,64 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: psuanpro <Marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/03 00:52:19 by psuanpro          #+#    #+#             */
-/*   Updated: 2022/09/04 02:57:26 by psuanpro         ###   ########.fr       */
+/*   Created: 2022/09/13 08:12:48 by psuanpro          #+#    #+#             */
+/*   Updated: 2022/09/15 08:01:26 by psuanpro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"so_long.h"
+#include "so_long.h"
 
-int	len_map_size(char *str)
+int	lenx_map(char *map)
 {
-	int i;
+	int	lenx;
 
-	i = 0;
-	if(!str)
-		return (0);
-	while (str[i] != '\0' && str[i] != '\n')
-		i++;
-	return (i);
+	lenx = 0;
+	while (map[lenx] != '\n' && map[lenx] != '\0')
+		lenx++;
+	return (lenx);
 }
 
-int	count_line_map(t_pro *p, char *path)
+int	leny_map(char *path)
 {
-	int	lenl;
 	char	*line;
-	
-	lenl = 0;
-	p->map.fd = open(path, O_RDONLY);
-	line = get_next_line(p->map.fd);
-	while(line != NULL)
+	int		fd;
+	int		leny;
+
+	fd = open(path, O_RDONLY);
+	line = get_next_line(fd);
+	leny = 0;
+	while (line != NULL)
 	{
 		free(line);
-		line = get_next_line(p->map.fd);
-		lenl++;
+		line = get_next_line(fd);
+		leny++;
 	}
 	free(line);
-	close(p->map.fd);
-	return (lenl);
+	close(fd);
+	return (leny);
 }
 
-void	get_map_ar(t_pro *p, char *path)
+t_map	new_map(char *path)
 {
-	int	i;
+	t_map	map;
+	int		fd;
+	int		i;
 
+	fd = open(path, O_RDONLY);
+	if (fd <= 0)
+		printf("path Error!!");
+	map.leny = leny_map(path);
+	map.ar = (char **)malloc(sizeof(char *) * map.leny + 1);
 	i = 0;
-	p->map.lenl = count_line_map(p, path);
-	p->map.fd = open(path, O_RDONLY);
-	p->map.ar = malloc(sizeof(char *) * p->map.lenl + 1);
-	while (i < p->map.lenl)
-		p->map.ar[i++] = get_next_line(p->map.fd);
-	p->map.ar[i] = get_next_line(p->map.fd);
-	close(p->map.fd);
+	while (i <= map.leny)
+		map.ar[i++] = get_next_line(fd);
+	close(fd);
+	map.lenx = lenx_map(map.ar[0]);
+	return (map);
 }
 
 void	get_map(t_pro *p, char *path)
 {
-	// p->map.fd = open(path, O_RDONLY);
-	// printf("map.fd == %d\n", p->map.fd);
-	get_map_ar(p, path);
-	// if (map_chk_size(p) != 0 || map_chk_wall(p) != 0)
-	// {
-	// 	if (map_chk_path(p) != 0)
-	// 		printf("create map");
-	// 	printf("free map after chk path");
-	// }
-	// else
-	// 	printf("free map");
-	
-		
-	// 	printf("hello\n");
-	map_chk_path(p);
-	// printf("map_chk == %d\n", map_chk_size(p));
-	// if (chk_map(p) > 0)
-		// create_map(p);
+	p->map = new_map(path);
+	chk_map(p, path);
 }

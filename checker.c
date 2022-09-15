@@ -5,59 +5,92 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: psuanpro <Marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/03 23:42:54 by psuanpro          #+#    #+#             */
-/*   Updated: 2022/09/04 02:25:34 by psuanpro         ###   ########.fr       */
+/*   Created: 2022/09/13 08:46:51 by psuanpro          #+#    #+#             */
+/*   Updated: 2022/09/15 08:00:39 by psuanpro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	map_chk_size(t_pro *p)
+int	chk_retangle(t_pro *p)
 {
-	int	len;
-	int	i;
+	int i;
 
 	i = 1;
-	len = len_map_size(p->map.ar[0]);
-	printf("lenl == %d\n", p->map.lenl);
-	while (i < p->map.lenl && p->map.ar[i] != NULL)
+	while (p->map.ar[i])
 	{
-		printf("p->map.ar[%d] == %s\n", i, p->map.ar[i]);
-		if (len != len_map_size(p->map.ar[i]))
+		if(lenx_map(p->map.ar[i]) != p->map.lenx)
 			return (0);
 		i++;
 	}
-	return (i);
+	return (1);
 }
 
-void	create_map_buff(t_pro *p)
+int	chk_topnbot(t_pro *p)
 {
 	int	i;
 
 	i = 0;
-	p->map.buf = malloc(sizeof(char *) * p->map.lenl + 1);
-	while (i < p->map.lenl)
+	while (i < p->map.lenx)
 	{
-		p->map.buf[i] = ft_strdup(p->map.ar[i]);
+		if (p->map.ar[0][i] != '1' || p->map.ar[p->map.leny - 1][i] != '1')
+			return (0);
 		i++;
 	}
-	p->map.buf[i] = NULL;
+	return (1);
 }
 
-int	find_p_line(t_pro *p)
+int	chk_leftnright(t_pro *p)
 {
-	return (0);
+	int	i;
+	
+	i = 0;
+	while (i < p->map.leny)
+	{
+		if (p->map.ar[i][0] != '1' || p->map.ar[i][p->map.lenx - 1] != '1')
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
-int	find_p_index(t_pro *p)
+int	chk_char(t_pro *p)
 {
-	return (0);
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	while (p->map.ar[i] != NULL)
+	{
+		j = 0;
+		while (p->map.ar[i][j] != '\n' && p->map.ar[i][j] != '\0')
+		{
+			if (ft_strchr("10PEC", p->map.ar[i][j]) == NULL)
+				return (0);
+			j++;
+		}
+		i++;
+	}
+	return (1);
 }
 
-int	map_chk_path(t_pro *p)
+int	chk_map(t_pro *p, char *path)
 {
-	create_map_buff(p);
+	t_map	mbuff;
 
-
-	return (0);
+	if (ft_strnstr(path + ft_strlen(path) -4,".ber", 4) == NULL)
+		printf("path Error\n");
+	if (p->map.leny <= 1 || !chk_retangle(p))
+		printf("Map is Errror\n");
+	if (!chk_topnbot(p) || !chk_leftnright(p))
+		printf("Wall is Error!!\n");
+	if (!chk_token(p))
+		printf("token Error\n");
+	if (!chk_char(p))
+	 	printf("map Error\n");
+	mbuff = new_map(path);
+	if (!flood_fill(mbuff.ar, find_p(p, mbuff.ar, 0), find_p(p, mbuff.ar, 1)))
+		printf("map is invalid exit");
+	return(0);
 }
