@@ -6,7 +6,7 @@
 /*   By: psuanpro <Marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 08:46:51 by psuanpro          #+#    #+#             */
-/*   Updated: 2022/09/15 08:00:39 by psuanpro         ###   ########.fr       */
+/*   Updated: 2022/09/16 07:35:38 by psuanpro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	chk_map(t_pro *p, char *path)
 	t_map	mbuff;
 
 	if (ft_strnstr(path + ft_strlen(path) -4,".ber", 4) == NULL)
-		printf("path Error\n");
+		error_checker(p, 0);
 	if (p->map.leny <= 1 || !chk_retangle(p))
 		printf("Map is Errror\n");
 	if (!chk_topnbot(p) || !chk_leftnright(p))
@@ -93,4 +93,10 @@ int	chk_map(t_pro *p, char *path)
 	if (!flood_fill(mbuff.ar, find_p(p, mbuff.ar, 0), find_p(p, mbuff.ar, 1)))
 		printf("map is invalid exit");
 	return(0);
+}
+
+void	error_checker(t_pro *p, int mode)
+{
+	(void)p; 
+	(void)mode;
 }

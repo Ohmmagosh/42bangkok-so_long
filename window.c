@@ -6,7 +6,7 @@
 /*   By: psuanpro <Marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 04:08:44 by psuanpro          #+#    #+#             */
-/*   Updated: 2022/09/16 03:55:40 by psuanpro         ###   ########.fr       */
+/*   Updated: 2022/09/16 06:55:34 by psuanpro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	draw_loop(t_pro *p, t_pic *i, int x, int y)
 	int	k;
 
 	j = 0;
+	// printf("time -> %d\n", p->time);
 	while (p->map.ar[j] != NULL)
 	{	
 		x = 0;
@@ -41,6 +42,10 @@ void	draw_loop(t_pro *p, t_pic *i, int x, int y)
 				k += draw_img(p, i->floor.ref, x, y);
 			else if(p->map.ar[j][k] == 'C')
 				k += draw_img(p, i->col.ref, x, y);
+			// else if(p->map.ar[j][k] == 'C' && p->time == 0)
+			// 	k += draw_img(p, i->col.ref, x, y);
+			// else if(p->map.ar[j][k] == 'C' && p->time == 2)
+			// 	k += draw_img(p, i->col2.ref, x, y);
 			else if(p->map.ar[j][k] == 'E' && p->ct != p->countall)
 				k += draw_img(p, i->exit.ref, x, y);
 			else if(p->map.ar[j][k] == 'E' && p->ct == p->countall)
@@ -72,6 +77,7 @@ void	init_img(t_pic *pi, t_pro *p)
 	pi->wall = new_img(p, "./asset/wall4.xpm");
 	pi->floor = new_img(p, "./asset/floor.xpm");
 	pi->col = new_img(p, "./asset/collect.xpm");
+	pi->col2 = new_img(p, "./asset/col2.xpm");
 	pi->exit = new_img(p, "./asset/exit.xpm");
 	pi->exitc = new_img(p, "./asset/exit2.xpm");
 	pi->spt = new_img(p, "./asset/spt.xpm");
@@ -84,7 +90,6 @@ t_img	new_img(t_pro *p, char *path)
 {
 	t_img	img;
 
-
 	img.c.x = 0;
 	img.c.y = 0;
 	img.ref = mlx_xpm_file_to_image(p->mlx, path, &img.p.x, &img.p.y); 
@@ -93,15 +98,12 @@ t_img	new_img(t_pro *p, char *path)
 
 int	loop_hook(t_pro *p)
 {
-	int x = 0;
-	int y = 0;
-	// int i = 0;
-
-	// i = mlx_mouse_get_pos(p->mlx, &x, &y);
-	mlx_mouse_move(p->mlx,  x, y);
-	printf(" x == %d y == %d\n", x, y);
 	p->time = time(NULL) % 3;
-	mlx_clear_window(p->mlx, p->win);
-	draw_map(p);
+	// printf("time -> %d\n", p->time);
+	if (p->time == 0 || p->time == 1 || p->time == 2)
+	{	
+		mlx_clear_window(p->mlx, p->win);
+		draw_map(p);
+	}
 	return (0);
 }

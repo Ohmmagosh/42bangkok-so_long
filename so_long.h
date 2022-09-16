@@ -6,7 +6,7 @@
 /*   By: psuanpro <Marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 17:58:56 by psuanpro          #+#    #+#             */
-/*   Updated: 2022/09/16 03:32:39 by psuanpro         ###   ########.fr       */
+/*   Updated: 2022/09/16 07:05:15 by psuanpro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct	s_pic
 	t_img	exit;
 	t_img	exitc;
 	t_img	col;
+	t_img	col2;
 	t_img	spt;
 	t_img	spt1;
 	t_img	spt2;
@@ -102,5 +103,6 @@ int		move_chk_count_exit(t_pro *p, int x, int y, int mode);
 int		count_c(t_pro *p, int x, int y, int mode);
 int		move_p_utils(t_pro *p, int x, int y, int mode);
 int		loop_hook(t_pro *p);
+void	error_checker(t_pro *p, int mode);
 
 # endif
