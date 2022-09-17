@@ -6,12 +6,13 @@
 #    By: psuanpro <Marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/08 00:34:28 by psuanpro          #+#    #+#              #
-#    Updated: 2022/09/17 17:29:06 by psuanpro         ###   ########.fr        #
+#    Updated: 2022/09/18 00:14:36 by psuanpro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = so_long
-
+LIBDIR = ./libft
+MLXDIR = ./mlx
 SRC = so_long.c \
 	map.c \
 	checker.c \
@@ -21,47 +22,33 @@ SRC = so_long.c \
 	window_utils.c \
 	sprite.c \
 	sprite_utils.c \
-	
-VAL= valgrind --leak-check=full
 
 OBJS = $(SRC:.c=.o)
-
 CC = gcc
-
 CFLAGS = -Wall -Wextra -Werror
-
-MLXLIB = -Lmlx -lmlx -Llibft -Lgnl -framework OpenGL -framework AppKit
+MLXLIB = -Lmlx -lmlx -Llibft -lft -framework OpenGL -framework AppKit
 
 %.o: %.c
 	$(CC) $(CFLAGS) -Imlx -c $< -o $@
 
 $(NAME): $(OBJ)
-	$(CC) $(SRC) $(OBJ) -Lmlx -lmlx -Llibft -Lgnl -framework OpenGL -framework AppKit -o $(NAME) 
+	make -C $(LIBDIR)
+	make -C $(MLXDIR)
+	$(CC) $(SRC) $(OBJ) -o $(NAME) $(MLXLIB)
 
 all: $(NAME)
 
 clean:
 	rm -rf $(OBJS)
+	make -C $(LIBDIR) clean
+	make -C $(MLXDIR) clean
 
 fclean: clean
 	rm -rf $(NAME)
-	rm -rf a.out
+	make -C  $(LIBDIR) fclean
 
 re: fclean all
+	make -C $(LIBDIR) re
+	make -C $(MLXDIR) re
 
-t: re
-	./$(NAME) maps/simple_map.ber
-
-cl:
-	gcc *.c ./libft/*c ./gnl/*.c -o so_long
-	valgrind --leak-check=full ./$(NAME) maps/simple_map.ber
-g:
-	gcc $(CFLAGS) *.c ./libft/*c ./gnl/*.c -Lmlx -lmlx -Llibft -Lgnl -framework OpenGL -framework AppKit -o so_long
-	./$(NAME) maps/simple_map.ber
-
-n:
-	gcc -Wall -Wextra -Werror ./libft/*c ./gnl/*.c ./ft_printf/*.c $(SRC) $(MLXLIB) -o so_long -g
-
-l:
-	lldb ./$(NAME) ./maps/simple_map.ber
 .PHONY: all clean fclean re 

@@ -6,7 +6,7 @@
 /*   By: psuanpro <Marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 02:59:53 by psuanpro          #+#    #+#             */
-/*   Updated: 2022/09/17 20:25:30 by psuanpro         ###   ########.fr       */
+/*   Updated: 2022/09/17 23:11:38 by psuanpro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	chk_token(t_pro *p)
 	}
 	if (count_token(p, 2) != 1)
 	{
-		write(1, "NO -----> E <----- in map", 25);
+		write (1, "NO -----> E <----- in map", 25);
 		return (0);
 	}	
 	return (1);
@@ -36,7 +36,7 @@ int	count_token(t_pro *p, int mode)
 {
 	int	i;
 	int	j;
-	int len;
+	int	len;
 
 	i = 0;
 	j = 0;
@@ -58,6 +58,7 @@ int	count_token(t_pro *p, int mode)
 	}
 	return (len);
 }
+
 void	error_checker(t_pro *p, int mode)
 {
 	free_after_chk(p);
@@ -71,11 +72,12 @@ void	error_checker(t_pro *p, int mode)
 		ft_printf("Error: Token\n");
 	else if (mode == 4)
 		ft_printf("Error: Map invalid character\n");
+	exit (0);
 }
 
 void	free_after_chk(t_pro *p)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (p->map.ar[++i])
@@ -86,7 +88,7 @@ void	free_after_chk(t_pro *p)
 
 void	free_after_ff(t_map *pi, t_pro *p)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (pi->ar[++i])
@@ -95,4 +97,3 @@ void	free_after_ff(t_map *pi, t_pro *p)
 	pi->ar = NULL;
 	free_after_chk(p);
 }
-

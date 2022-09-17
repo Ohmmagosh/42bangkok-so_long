@@ -6,7 +6,7 @@
 /*   By: psuanpro <Marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 17:58:56 by psuanpro          #+#    #+#             */
-/*   Updated: 2022/09/17 21:39:02 by psuanpro         ###   ########.fr       */
+/*   Updated: 2022/09/17 22:24:44 by psuanpro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@
 # include "ft_printf/ft_printf.h"
 # include <time.h>
 
-
-typedef struct	s_vec
+typedef struct s_vec
 {
 	int	x;
 	int	y;
@@ -33,14 +32,14 @@ typedef struct	s_vec
 	int	l;
 }				t_vec;
 
-typedef struct	s_img
+typedef struct s_img
 {
 	void	*ref;
 	t_vec	p;
 	t_vec	c;
 }				t_img;
 
-typedef struct	s_pic
+typedef struct s_pic
 {
 	t_img	wall;
 	t_img	floor;
@@ -54,7 +53,7 @@ typedef struct	s_pic
 	t_img	spt3;
 }				t_pic;
 
-typedef struct	s_map
+typedef struct s_map
 {
 	char	**ar;
 	int		leny;
@@ -64,7 +63,7 @@ typedef struct	s_map
 	int		lenc;
 }				t_map;
 
-typedef struct	s_pro
+typedef struct s_pro
 {
 	void	*mlx;
 	void	*win;
@@ -94,7 +93,7 @@ int		leny_map(char *path);
 int		chk_retangle(t_pro *p);
 int		lenx_map(char *map);
 int		chk_flood(char **map, int x, int y);
-int		find_p(t_pro *p,char **map, int mode);
+int		find_p(t_pro *p, char **map, int mode);
 int		flood_fill(char **map, int y, int x);
 int		chk_len_token(t_pro *p, int mode);
 int		count_token(t_pro *p, int mode);
@@ -110,9 +109,10 @@ int		count_c(t_pro *p, int x, int y, int mode);
 int		move_p_utils(t_pro *p, int x, int y, int mode);
 int		loop_hook(t_pro *p);
 int		draw_utils(char map);
+int		close_win(t_pro *p);
 void	draw_utils2(char map, t_pro *p, t_vec *axis, t_pic *i);
 void	free_after_chk(t_pro *p);
 void	free_after_ff(t_map *pi, t_pro *p);
 void	free_ff(t_map *p);
 
-# endif
+#endif

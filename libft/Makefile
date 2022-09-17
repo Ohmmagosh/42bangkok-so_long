@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: psuanpro <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: psuanpro <Marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/02/16 16:01:50 by psuanpro          #+#    #+#              #
-#    Updated: 2022/03/25 19:46:41 by psuanpro         ###   ########.fr        #
+#    Created: 2022/05/01 23:10:55 by psuanpro          #+#    #+#              #
+#    Updated: 2022/09/18 00:03:56 by psuanpro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,10 +44,16 @@ SRCS	= ft_isalnum.c \
 	  ft_putchar_fd.c \
 	  ft_putstr_fd.c \
 	  ft_putendl_fd.c \
-	  ft_putnbr_fd.c
+	  ft_putnbr_fd.c \
+	  ft_printf.c \
+	  ft_printf_untils_c.c \
+	  ft_printf_untils_n.c \
+	  ft_printf_check.c \
+	  get_next_line_utils.c \
+	  get_next_line.c \
 
 BONUS_SRCS	= $(SRCS) \
-                  ft_lstnew.c \
+		  ft_lstnew.c \
 		  ft_lstadd_front.c \
 		  ft_lstsize.c \
 		  ft_lstlast.c \

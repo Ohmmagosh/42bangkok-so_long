@@ -6,7 +6,7 @@
 /*   By: psuanpro <Marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 08:12:48 by psuanpro          #+#    #+#             */
-/*   Updated: 2022/09/16 07:09:05 by psuanpro         ###   ########.fr       */
+/*   Updated: 2022/09/17 23:36:40 by psuanpro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_map	new_map(char *path)
 
 	fd = open(path, O_RDONLY);
 	if (fd <= 0)
-		ft_printf("file not found");
+		ft_printf("file not found\n");
 	map.leny = leny_map(path);
 	map.ar = (char **)malloc(sizeof(char *) * map.leny + 1);
 	i = 0;
@@ -65,4 +65,15 @@ void	get_map(t_pro *p, char *path)
 {
 	p->map = new_map(path);
 	chk_map(p, path);
+}
+
+void	free_ff(t_map *p)
+{
+	int	i;
+
+	i = -1;
+	while (p->ar[++i])
+		free(p->ar[i]);
+	free(p->ar);
+	p->ar = NULL;
 }

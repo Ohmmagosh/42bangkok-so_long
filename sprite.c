@@ -6,7 +6,7 @@
 /*   By: psuanpro <Marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 09:13:34 by psuanpro          #+#    #+#             */
-/*   Updated: 2022/09/17 20:27:23 by psuanpro         ###   ########.fr       */
+/*   Updated: 2022/09/17 22:00:21 by psuanpro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,18 @@ void	move_p(t_pro *p, int x, int y, int mode)
 
 int	key_hook(int key, t_pro *p)
 {
-	if (key == 53){
-		mlx_destroy_window(p->mlx, p->win);
+	if (key == 53)
+	{
+		close_win(p);
 		exit(0);
 	}
-	else if(key == 13 || key == 126)
-		move_p(p, find_p(p, p->map.ar, 1),find_p(p, p->map.ar, 0), 0);
-	else if(key == 0 || key == 123)
+	else if (key == 13 || key == 126)
+		move_p(p, find_p(p, p->map.ar, 1), find_p(p, p->map.ar, 0), 0);
+	else if (key == 0 || key == 123)
 		move_p(p, find_p(p, p->map.ar, 1), find_p(p, p->map.ar, 0), 2);
-	else if(key == 1 || key == 125)
+	else if (key == 1 || key == 125)
 		move_p(p, find_p(p, p->map.ar, 1), find_p(p, p->map.ar, 0), 1);
-	else if(key == 2 || key == 124)
+	else if (key == 2 || key == 124)
 		move_p(p, find_p(p, p->map.ar, 1), find_p(p, p->map.ar, 0), 3);
 	return (0);
 }
@@ -52,10 +53,10 @@ int	move_chk(t_pro *p, int x, int y, int mode)
 {
 	if (!move_chk_wall(p, x, y, mode))
 		return (0);
-	else if(!move_chk_count_exit(p, x, y, mode))
+	else if (!move_chk_count_exit(p, x, y, mode))
 		return (0);
-	else if(!move_chk_exit(p, x, y, mode))
-		exit(0);
+	else if (!move_chk_exit(p, x, y, mode))
+		exit (0);
 	return (1);
 }
 
@@ -72,18 +73,5 @@ int	count_c(t_pro *p, int x, int y, int mode)
 		else if (mode == 3)
 			p->ct += 1;
 	}
-	return (1);
-}
-
-int	move_chk_count_exit(t_pro *p, int x, int y, int mode)
-{
-	if (mode == 0 && p->map.ar[y - 1][x] == 'E' && p->ct < p->countall)
-		return (0);
-	else if (mode == 2 && p->map.ar[y][x - 1] == 'E' && p->ct < p->countall)
-		return (0);
-	else if (mode == 1 && p->map.ar[y + 1][x] == 'E' && p->ct < p->countall)
-		return (0);
-	else if (mode == 3 && p->map.ar[y][x + 1] == 'E' && p->ct < p->countall)
-		return (0);
 	return (1);
 }
