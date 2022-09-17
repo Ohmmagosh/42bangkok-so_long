@@ -6,7 +6,7 @@
 /*   By: psuanpro <Marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 08:46:51 by psuanpro          #+#    #+#             */
-/*   Updated: 2022/09/16 07:35:38 by psuanpro         ###   ########.fr       */
+/*   Updated: 2022/09/17 21:39:35 by psuanpro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,21 +82,30 @@ int	chk_map(t_pro *p, char *path)
 	if (ft_strnstr(path + ft_strlen(path) -4,".ber", 4) == NULL)
 		error_checker(p, 0);
 	if (p->map.leny <= 1 || !chk_retangle(p))
-		printf("Map is Errror\n");
+		error_checker(p, 1);
 	if (!chk_topnbot(p) || !chk_leftnright(p))
-		printf("Wall is Error!!\n");
+		error_checker(p, 2);
 	if (!chk_token(p))
-		printf("token Error\n");
+		error_checker(p, 3);
 	if (!chk_char(p))
-	 	printf("map Error\n");
+	 	error_checker(p, 4);
 	mbuff = new_map(path);
 	if (!flood_fill(mbuff.ar, find_p(p, mbuff.ar, 0), find_p(p, mbuff.ar, 1)))
-		printf("map is invalid exit");
+	{
+		free_after_ff(&mbuff, p);
+		ft_printf("map is invalid exit");
+	}
+	free_ff(&mbuff);
 	return(0);
 }
 
-void	error_checker(t_pro *p, int mode)
+void	free_ff(t_map *p)
 {
-	(void)p; 
-	(void)mode;
+	int	i;
+
+	i = -1;
+	while (p->ar[++i])
+		free(p->ar[i]);
+	free(p->ar);
+	p->ar = NULL;
 }

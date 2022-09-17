@@ -6,7 +6,7 @@
 #    By: psuanpro <Marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/08 00:34:28 by psuanpro          #+#    #+#              #
-#    Updated: 2022/09/15 03:45:27 by psuanpro         ###   ########.fr        #
+#    Updated: 2022/09/17 17:29:06 by psuanpro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ SRC = so_long.c \
 	flood_fill.c \
 	check_token.c \
 	window.c \
+	window_utils.c \
 	sprite.c \
 	sprite_utils.c \
 	

@@ -6,11 +6,18 @@
 /*   By: psuanpro <Marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 04:08:44 by psuanpro          #+#    #+#             */
-/*   Updated: 2022/09/16 06:55:34 by psuanpro         ###   ########.fr       */
+/*   Updated: 2022/09/17 21:32:42 by psuanpro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+int	close_win(t_pro *p)
+{
+	free_after_chk(p);
+	mlx_destroy_window(p->mlx, p->win);
+	return (0);
+}
 
 void	create_window(t_pro *p)
 {
@@ -18,92 +25,79 @@ void	create_window(t_pro *p)
 	init_window(p);
 	p->win = mlx_new_window(p->mlx, p->map.width, p->map.height, "so_long");
 	draw_map(p);
-	mlx_key_hook(p->win, key_hook, p);
 	mlx_loop_hook(p->mlx, loop_hook, p);
+	mlx_hook(p->win, 2, 1L<<0, key_hook, p);
+	mlx_hook(p->win, 17, 1L<<0, close_win, p);
 	mlx_loop(p->mlx);
 }
 
-void	draw_loop(t_pro *p, t_pic *i, int x, int y)
+void	draw_loop(t_pro *p, t_pic *i)
 {
-	int	j;
-	int	k;
+	t_vec	axis;
 
-	j = 0;
-	// printf("time -> %d\n", p->time);
-	while (p->map.ar[j] != NULL)
+	axis = init_axis(p);
+	while (p->map.ar[axis.j] != NULL)
 	{	
-		x = 0;
-		k = 0;
-		while (p->map.ar[j][k] != '\n' && p->map.ar[j][k] != '\0' )
+		axis.x = 0;
+		axis.k = 0;
+		while (draw_utils(p->map.ar[axis.j][axis.k]) && axis.x < axis.l)
 		{
-			if (p->map.ar[j][k] == '1')
-				k += draw_img(p, i->wall.ref, x, y);
-			else if(p->map.ar[j][k] == '0')
-				k += draw_img(p, i->floor.ref, x, y);
-			else if(p->map.ar[j][k] == 'C')
-				k += draw_img(p, i->col.ref, x, y);
-			// else if(p->map.ar[j][k] == 'C' && p->time == 0)
-			// 	k += draw_img(p, i->col.ref, x, y);
-			// else if(p->map.ar[j][k] == 'C' && p->time == 2)
-			// 	k += draw_img(p, i->col2.ref, x, y);
-			else if(p->map.ar[j][k] == 'E' && p->ct != p->countall)
-				k += draw_img(p, i->exit.ref, x, y);
-			else if(p->map.ar[j][k] == 'E' && p->ct == p->countall)
-				k += draw_img(p, i->exitc.ref, x, y);
-			else if(p->map.ar[j][k] == 'P' && p->time == 0)
-				k += draw_img(p, i->spt1.ref, x, y);
-			else if(p->map.ar[j][k] == 'P' && p->time == 1)
-				k += draw_img(p, i->spt2.ref, x, y);
-			else if(p->map.ar[j][k] == 'P' && p->time == 2)
-				k += draw_img(p, i->spt3.ref, x, y);
-			x+=48;
+			draw_utils2(p->map.ar[axis.j][axis.k],p, &axis, i);
+			axis.x+=48;
 		}
-		j++;
-		y+=48;
+		axis.j++;
+		axis.y+=48;
 	}
 }
 
-void	draw_map(t_pro *p)
+void	draw_utils2(char map, t_pro *p, t_vec *axis, t_pic *i)
 {
-	t_pic	i;
-
-	init_img(&i, p);
-	draw_loop(p, &i, 0, 0);
-
+	if (map == '1')
+		axis->k += draw_img(p, i->wall.ref, axis->x, axis->y);
+	else if(map == '0')
+		axis->k += draw_img(p, i->floor.ref, axis->x, axis->y);
+	else if(map == 'C' && p->time == 0)
+		axis->k += draw_img(p, i->col.ref, axis->x, axis->y);
+	else if(map == 'C' && p->time == 1)
+		axis->k += draw_img(p, i->col.ref, axis->x, axis->y);
+	else if(map == 'C' && p->time == 2)
+		axis->k += draw_img(p, i->col2.ref, axis->x, axis->y);
+	else if(map == 'P' && p->time == 0)
+		axis->k += draw_img(p, i->spt1.ref, axis->x, axis->y);
+	else if(map == 'P' && p->time == 1)
+		axis->k += draw_img(p, i->spt2.ref, axis->x, axis->y);
+	else if(map == 'P' && p->time == 2)
+		axis->k += draw_img(p, i->spt3.ref, axis->x, axis->y);
+	else if(map == 'E' && p->ct != p->countall)
+		axis->k += draw_img(p, i->exit.ref, axis->x, axis->y);
+	else if(map == 'E' && p->ct == p->countall)
+		axis->k += draw_img(p, i->exitc.ref, axis->x, axis->y);
 }
 
-void	init_img(t_pic *pi, t_pro *p)
+t_vec	init_axis(t_pro *p)
 {
-	pi->wall = new_img(p, "./asset/wall4.xpm");
-	pi->floor = new_img(p, "./asset/floor.xpm");
-	pi->col = new_img(p, "./asset/collect.xpm");
-	pi->col2 = new_img(p, "./asset/col2.xpm");
-	pi->exit = new_img(p, "./asset/exit.xpm");
-	pi->exitc = new_img(p, "./asset/exit2.xpm");
-	pi->spt = new_img(p, "./asset/spt.xpm");
-	pi->spt1 = new_img(p, "./asset/spt1.xpm");
-	pi->spt2 = new_img(p, "./asset/spt2.xpm");
-	pi->spt3 = new_img(p, "./asset/spt3.xpm");
+	t_vec	i;
+
+	i.x = 0;
+	i.y = 0;
+	i.k = 0;
+	i.j = 0;
+	i.l = p->map.width;
+	return (i);
 }
 
-t_img	new_img(t_pro *p, char *path)
+int	draw_utils(char map)
 {
-	t_img	img;
-
-	img.c.x = 0;
-	img.c.y = 0;
-	img.ref = mlx_xpm_file_to_image(p->mlx, path, &img.p.x, &img.p.y); 
-	return (img);
-}
-
-int	loop_hook(t_pro *p)
-{
-	p->time = time(NULL) % 3;
-	// printf("time -> %d\n", p->time);
-	if (p->time == 0 || p->time == 1 || p->time == 2)
-	{	
-		mlx_clear_window(p->mlx, p->win);
-		draw_map(p);
-	}
+	if (map != '\n' && map != '\0')
+		return (1);
 	return (0);
 }
+
+// void	draw_map(t_pro *p)
+// {
+// 	t_pic	i;
+
+// 	init_img(&i, p);
+// 	draw_loop(p, &i);
+// }
+

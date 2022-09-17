@@ -6,7 +6,7 @@
 /*   By: psuanpro <Marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 17:58:56 by psuanpro          #+#    #+#             */
-/*   Updated: 2022/09/16 07:05:15 by psuanpro         ###   ########.fr       */
+/*   Updated: 2022/09/17 21:39:02 by psuanpro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@ typedef struct	s_vec
 {
 	int	x;
 	int	y;
+	int	j;
+	int	k;
+	int	l;
 }				t_vec;
 
 typedef struct	s_img
@@ -70,16 +73,19 @@ typedef struct	s_pro
 	int		step;
 	int		time;
 	t_map	map;
+	t_vec	axis;
 }				t_pro;
 
+t_vec	init_axis(t_pro *p);
 t_img	new_img(t_pro *p, char *path);
 t_map	new_map(char *path);
 void	get_map(t_pro *p, char *path);
 void	create_window(t_pro *p);
 void	draw_map(t_pro *p);
 void	init_img(t_pic *pi, t_pro *p);
-void	draw_loop(t_pro *p, t_pic *i, int x, int y);
+void	draw_loop(t_pro *p, t_pic *i);
 void	init_window(t_pro *p);
+void	error_checker(t_pro *p, int mode);
 int		chk_map(t_pro *p, char *path);
 int		chk_topnbot(t_pro *p);
 int		chk_leftnright(t_pro *p);
@@ -103,6 +109,10 @@ int		move_chk_count_exit(t_pro *p, int x, int y, int mode);
 int		count_c(t_pro *p, int x, int y, int mode);
 int		move_p_utils(t_pro *p, int x, int y, int mode);
 int		loop_hook(t_pro *p);
-void	error_checker(t_pro *p, int mode);
+int		draw_utils(char map);
+void	draw_utils2(char map, t_pro *p, t_vec *axis, t_pic *i);
+void	free_after_chk(t_pro *p);
+void	free_after_ff(t_map *pi, t_pro *p);
+void	free_ff(t_map *p);
 
 # endif

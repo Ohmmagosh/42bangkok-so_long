@@ -6,12 +6,11 @@
 /*   By: psuanpro <Marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 09:13:34 by psuanpro          #+#    #+#             */
-/*   Updated: 2022/09/16 03:44:46 by psuanpro         ###   ########.fr       */
+/*   Updated: 2022/09/17 20:27:23 by psuanpro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
 
 int	draw_img(t_pro *p, void *ref, int x, int y)
 {
@@ -30,7 +29,6 @@ void	move_p(t_pro *p, int x, int y, int mode)
 	else if (mode == 3 && move_chk(p, x, y, 3) && count_c(p, x + 1, y, 3))
 		p->step += move_p_utils(p, x, y, 3);
 	ft_printf("count step == %d count c == %d\n", p->step, p->ct);
-	// draw_map(p);
 }
 
 int	key_hook(int key, t_pro *p)
@@ -74,39 +72,6 @@ int	count_c(t_pro *p, int x, int y, int mode)
 		else if (mode == 3)
 			p->ct += 1;
 	}
-	return (1);
-}
-
-int	chk_counter_c(int catch, int all)
-{
-	if (catch < all)
-		return (0);
-	return (1);
-}
-
-int	move_chk_wall(t_pro *p, int x, int y, int mode)
-{
-	if (mode == 0 && p->map.ar[y - 1][x] == '1')
-		return (0);
-	else if (mode == 2 && p->map.ar[y][x - 1] == '1')
-		return (0);
-	else if (mode == 1 && p->map.ar[y + 1][x] == '1')
-		return (0);
-	else if (mode == 3 && p->map.ar[y][x + 1] == '1')
-		return (0);
-	return (1);
-}
-
-int	move_chk_exit(t_pro *p, int x, int y, int mode)
-{
-	if (mode == 0 && p->map.ar[y - 1][x] == 'E' && p->ct == p->countall)
-		return (0);
-	else if (mode == 2 && p->map.ar[y][x - 1] == 'E' && p->ct == p->countall)
-		return (0);
-	else if (mode == 1 && p->map.ar[y + 1][x] == 'E' && p->ct == p->countall)
-		return (0);
-	else if (mode == 3 && p->map.ar[y][x + 1] == 'E' && p->ct == p->countall)
-		return (0);
 	return (1);
 }
 
