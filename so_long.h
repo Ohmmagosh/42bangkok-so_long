@@ -6,7 +6,7 @@
 /*   By: psuanpro <Marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 17:58:56 by psuanpro          #+#    #+#             */
-/*   Updated: 2022/09/17 22:24:44 by psuanpro         ###   ########.fr       */
+/*   Updated: 2022/09/18 00:24:03 by psuanpro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 # include <stdio.h>
 # include <math.h>
 # include <fcntl.h>
-# include "gnl/get_next_line.h"
-# include "ft_printf/ft_printf.h"
+# include "./libft/get_next_line.h"
+# include "./libft/ft_printf.h"
 # include <time.h>
 
 typedef struct s_vec
