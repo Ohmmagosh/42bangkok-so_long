@@ -6,7 +6,7 @@
 #    By: psuanpro <Marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/08 00:34:28 by psuanpro          #+#    #+#              #
-#    Updated: 2022/09/18 00:14:36 by psuanpro         ###   ########.fr        #
+#    Updated: 2022/09/19 11:24:53 by psuanpro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,5 +50,6 @@ fclean: clean
 re: fclean all
 	make -C $(LIBDIR) re
 	make -C $(MLXDIR) re
+
 
 .PHONY: all clean fclean re 
