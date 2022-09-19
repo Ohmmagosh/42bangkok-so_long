@@ -6,7 +6,7 @@
 /*   By: psuanpro <Marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 02:59:53 by psuanpro          #+#    #+#             */
-/*   Updated: 2022/09/17 23:11:38 by psuanpro         ###   ########.fr       */
+/*   Updated: 2022/09/19 17:12:10 by psuanpro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,17 @@ int	count_token(t_pro *p, int mode)
 
 void	error_checker(t_pro *p, int mode)
 {
-	free_after_chk(p);
 	if (mode == 0)
 		ft_printf("Error: map is invalid\n");
 	else if (mode == 1)
-		ft_printf("Error: map is not retangle\n");
+		ft_printf("Error: map is not rectangle\n");
 	else if (mode == 2)
 		ft_printf("Error: Wall is invalid\n");
 	else if (mode == 3)
 		ft_printf("Error: Token\n");
 	else if (mode == 4)
 		ft_printf("Error: Map invalid character\n");
+	free_after_chk(p);
 	exit (0);
 }
 

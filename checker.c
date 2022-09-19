@@ -6,7 +6,7 @@
 /*   By: psuanpro <Marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 08:46:51 by psuanpro          #+#    #+#             */
-/*   Updated: 2022/09/17 23:43:30 by psuanpro         ###   ########.fr       */
+/*   Updated: 2022/09/19 17:09:25 by psuanpro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,13 @@ int	chk_char(t_pro *p)
 
 	i = 0;
 	j = 0;
+
 	while (p->map.ar[i] != NULL)
 	{
 		j = 0;
 		while (p->map.ar[i][j] != '\n' && p->map.ar[i][j] != '\0')
 		{
-			if (ft_strchr("10PEC", p->map.ar[i][j]) == NULL)
+			if (ft_strchr("10PEC", p->map.ar[i][j]) == 0)
 				return (0);
 			j++;
 		}
@@ -78,6 +79,7 @@ int	chk_char(t_pro *p)
 int	chk_map(t_pro *p, char *path)
 {
 	t_map	mbuff;
+
 
 	if (ft_strnstr(path + ft_strlen(path) - 4, ".ber", 4) == NULL)
 		error_checker(p, 0);

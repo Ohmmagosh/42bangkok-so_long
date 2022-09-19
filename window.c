@@ -6,7 +6,7 @@
 /*   By: psuanpro <Marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 04:08:44 by psuanpro          #+#    #+#             */
-/*   Updated: 2022/09/19 11:25:11 by psuanpro         ###   ########.fr       */
+/*   Updated: 2022/09/19 17:32:00 by psuanpro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,6 @@ int	close_win(t_pro *p)
 {
 	free_after_chk(p);
 	mlx_destroy_window(p->mlx, p->win);
-	free(p->mlx);
-	free(p->win);
-	p->mlx = NULL;
-	p->win = NULL;
 	exit (0);
 }
 
